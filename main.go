@@ -25,7 +25,7 @@ func main() {
 	e.Use(middleware.Logger())
 
 	e.GET("/accounts", func(c echo.Context) error {
-		accounts, err := accounts.GetAccounts(c.Request(), ctx)
+		accounts, err := accounts.GetAccounts(ctx)
 
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]interface{}{

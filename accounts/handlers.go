@@ -2,12 +2,11 @@ package accounts
 
 import (
 	"errors"
-	"net/http"
 
 	"github.com/Mekawy5/money-transfer/internals/appctx"
 )
 
-func GetAccounts(r *http.Request, ctx appctx.Context) ([]Account, error) {
+func GetAccounts(ctx appctx.Context) ([]Account, error) {
 	var accounts []Account
 
 	stmt, err := ctx.DBConn.Prepare("SELECT id, name, balance FROM accounts")
@@ -15,13 +14,11 @@ func GetAccounts(r *http.Request, ctx appctx.Context) ([]Account, error) {
 		return nil, err
 	}
 
-	// Execute the SQL statement and fetch the results.
 	rows, err := stmt.Query()
 	if err != nil {
 		return nil, err
 	}
 
-	// Iterate over the rows and print the results.
 	for rows.Next() {
 		var account Account
 		err := rows.Scan(&account.ID, &account.Name, &account.Balance)

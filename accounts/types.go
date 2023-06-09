@@ -1,7 +1,6 @@
 package accounts
 
 import (
-	_ "embed"
 	"encoding/json"
 	"strconv"
 )
@@ -10,6 +9,10 @@ type TransferRequest struct {
 	SenderID   string  `form:"sender_id" validate:"required,uuid"`
 	ReceiverID string  `form:"receiver_id" validate:"required,uuid"`
 	Amount     float64 `form:"amount" validate:"required,numeric,min=0"`
+}
+
+type GetAccountRequest struct {
+	ID string `query:"id" form:"id" path:"id" validate:"required,uuid"`
 }
 
 // Account struct holds account data
@@ -37,8 +40,3 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 	a.Balance = balance
 	return nil
 }
-
-var (
-	//go:embed accounts.json
-	accountsFile []byte
-)
