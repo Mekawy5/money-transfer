@@ -11,7 +11,7 @@ import (
 
 var (
 	//go:embed accounts/accounts.json
-	accountsJson []byte
+	accountsJSON []byte
 )
 
 // init function runs first in the package, setup app dependencies.
@@ -30,7 +30,7 @@ func init() {
 
 	// load accounts data
 	{
-		err := accounts.LoadAccounts(ctx, accountsJson)
+		err := accounts.LoadAccounts(ctx, accountsJSON)
 		if err != nil {
 			panic(err)
 		}

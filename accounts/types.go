@@ -1,3 +1,4 @@
+// Package accounts for all accounts logic
 package accounts
 
 import (
@@ -5,14 +6,11 @@ import (
 	"strconv"
 )
 
+// TransferRequest struct for request validation
 type TransferRequest struct {
 	SenderID   string  `form:"sender_id" validate:"required,uuid"`
 	ReceiverID string  `form:"receiver_id" validate:"required,uuid"`
 	Amount     float64 `form:"amount" validate:"required,numeric,min=0"`
-}
-
-type GetAccountRequest struct {
-	ID string `query:"id" form:"id" path:"id" validate:"required,uuid"`
 }
 
 // Account struct holds account data
@@ -22,6 +20,7 @@ type Account struct {
 	Balance float64 `json:"balance"`
 }
 
+// UnmarshalJSON custom marshalling for string number conversion
 func (a *Account) UnmarshalJSON(data []byte) error {
 	type Alias Account
 	aux := &struct {

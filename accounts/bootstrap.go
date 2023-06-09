@@ -1,4 +1,4 @@
-// accounts
+// Package accounts for all accounts logic
 package accounts
 
 import (
@@ -9,7 +9,7 @@ import (
 )
 
 // LoadAccounts loads accounts data from embedded file into created sqlite table.
-func LoadAccounts(appctx appctx.Context, accountsJson []byte) error {
+func LoadAccounts(appctx appctx.Context, accountsJSON []byte) error {
 	accounts := []Account{}
 
 	_, err := appctx.DBConn.Exec("CREATE TABLE IF NOT EXISTS accounts (id TEXT, name TEXT, balance REAL)")
@@ -17,7 +17,7 @@ func LoadAccounts(appctx appctx.Context, accountsJson []byte) error {
 		return err
 	}
 
-	err = json.Unmarshal(accountsJson, &accounts)
+	err = json.Unmarshal(accountsJSON, &accounts)
 	if err != nil {
 		return err
 	}

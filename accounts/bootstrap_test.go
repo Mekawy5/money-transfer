@@ -1,3 +1,4 @@
+// Package accounts for all accounts logic
 package accounts
 
 import (
@@ -23,8 +24,8 @@ func TestLoadAccountsReturnErrorIfJsonInvalid(t *testing.T) {
 		ExpectExec("CREATE TABLE IF NOT EXISTS accounts (id TEXT, name TEXT, balance REAL)").
 		WillReturnResult(sqlmock.NewResult(0, 0))
 
-	accountsJson := []byte("invalid json")
-	err = LoadAccounts(appctx, accountsJson)
+	accountsJSON := []byte("invalid json")
+	err = LoadAccounts(appctx, accountsJSON)
 
 	require.EqualError(t, err, errors.New("invalid character 'i' looking for beginning of value").Error())
 }
@@ -56,13 +57,13 @@ func TestLoadAccountsSuccessWithValidJson(t *testing.T) {
 				AddRow("17f904c1-806f-4252-9103-74e7a5d3e340", "Fivespan", 946.15).
 				AddRow("fd796d75-1bcf-4a95-bf1a-f7b296adb79f", "Wikizz", 3708.11))
 
-	accountsJson := []byte(`
+	accountsJSON := []byte(`
 		[{"id":"3d253e29-8785-464f-8fa0-9e4b57699db9","name":"Trupe","balance":"87.11"},
 		{"id":"17f904c1-806f-4252-9103-74e7a5d3e340","name":"Fivespan","balance":"946.15"},
 		{"id":"fd796d75-1bcf-4a95-bf1a-f7b296adb79f","name":"Wikizz","balance":"3708.11"}]
 	`)
 
-	_ = LoadAccounts(appctx, accountsJson)
+	_ = LoadAccounts(appctx, accountsJSON)
 
 	accounts, _ := GetAccounts(appctx)
 

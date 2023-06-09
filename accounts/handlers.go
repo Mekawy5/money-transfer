@@ -1,3 +1,4 @@
+// Package accounts for all accounts logic
 package accounts
 
 import (
@@ -6,6 +7,7 @@ import (
 	"github.com/Mekawy5/money-transfer/internals/appctx"
 )
 
+// GetAccounts list all accounts info from db.
 func GetAccounts(ctx appctx.Context) ([]Account, error) {
 	var accounts []Account
 
@@ -32,6 +34,7 @@ func GetAccounts(ctx appctx.Context) ([]Account, error) {
 	return accounts, nil
 }
 
+// Transfer balance from one account to another.
 func Transfer(r TransferRequest, ctx appctx.Context) (Account, Account, error) {
 	// begin transaction
 	tx, err := ctx.DBConn.Begin()

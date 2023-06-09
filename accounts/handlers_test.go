@@ -1,3 +1,4 @@
+// Package accounts for all accounts logic
 package accounts
 
 import (
