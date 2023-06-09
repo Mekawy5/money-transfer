@@ -3,6 +3,7 @@ package accounts
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/Mekawy5/money-transfer/internals/appctx"
 )
@@ -69,18 +70,18 @@ func Transfer(r TransferRequest, ctx appctx.Context) (Account, Account, error) {
 	_, err = tx.Exec("UPDATE accounts SET balance = ? WHERE id = ?", from.Balance, from.ID)
 	if err != nil {
 		tx.Rollback()
-		return Account{}, Account{}, errors.New("balance transfer failed")
+		return Account{}, Account{}, fmt.Errorf("failed removing balance %s", err.Error())
 	}
 	_, err = tx.Exec("UPDATE accounts SET balance = ? WHERE id = ?", to.Balance, to.ID)
 	if err != nil {
 		tx.Rollback()
-		return Account{}, Account{}, errors.New("balance transfer failed")
+		return Account{}, Account{}, fmt.Errorf("failed adding balance %s", err.Error())
 	}
 
 	// Commit the transaction
 	err = tx.Commit()
 	if err != nil {
-		return Account{}, Account{}, errors.New("balance transfer failed")
+		return Account{}, Account{}, fmt.Errorf("balance transfer failed %s", err.Error())
 	}
 
 	return from, to, nil
