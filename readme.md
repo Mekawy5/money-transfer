@@ -153,3 +153,14 @@ To run the application, use go build to generate the binary and simply you can e
 run ` go build . `
 
 run ` ./money-transfer `
+
+# Design suggestions
+
+
+- use a persisted transactional database like Postgres
+- store transaction audit
+- authentication/authorization implementation
+- idempotency for transfer requests to prevent redundant transactions
+- use caching mechanism to improve the application performance with proper cache invalidation/updates to maintain consistency
+- use log monitoring service for fast debugging
+- use sentry for better error tracking
